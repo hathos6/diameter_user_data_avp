@@ -115,6 +115,7 @@ class ReAuthAnswer(ReAuth):
     state_class: list[bytes]
     reply_message: list[str]
     prompt: int
+    charging_rule_report: ChargingRuleReport
 
     avp_def: AvpGenType = (
         AvpGenDef("session_id", AVP_SESSION_ID, is_required=True),
@@ -143,6 +144,7 @@ class ReAuthAnswer(ReAuth):
         AvpGenDef("state_class", AVP_CLASS),
         AvpGenDef("reply_message", AVP_REPLY_MESSAGE),
         AvpGenDef("prompt", AVP_PROMPT),
+        AvpGenDef("charging_rule_report", AVP_TGPP_CHARGING_RULE_REPORT, type_class=ChargingRuleReport),
     )
 
     def __post_init__(self):
@@ -156,6 +158,7 @@ class ReAuthAnswer(ReAuth):
         setattr(self, "configuration_token", [])
         setattr(self, "state_class", [])
         setattr(self, "reply_message", [])
+        setattr(self, "charging_rule_report", [])
 
         assign_attr_from_defs(self, self._avps)
         self._avps = []
